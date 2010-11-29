@@ -3,10 +3,12 @@
 <script src="js/sylvester.js"></script>
 <style>
     * { margin: 0 }
-    html, body { height: 100%; width: 100% }
+    html, body { height: 100%; width: 100%; }
     canvas { background: #00000A; display: block; margin: auto; position: relative; top: 12.5%; }
+    a, a > img { border: none; display: block; position: absolute; right: 0; top: 0; z-index: 9001; }
 </style>
 <canvas id=universe>here be fallback content</canvas>
+<a href=https://github.com/erlehmann/schwrkrft><img src=forkme.png alt="Fork me on GitHub"></a>
 <script src="js/n-body.js"></script>
 <script>
     var canvas = document.getElementById('universe');
