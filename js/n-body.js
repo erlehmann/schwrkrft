@@ -23,7 +23,7 @@ var Universe = function(canvas, milliseconds, offset) {
                     var distance = p1.position.distanceFrom(p2.position);
 
                     // Newton's law of universal gravitation
-                    var gravForce = 9.81 * (p1.mass * p2.mass) / Math.pow(distance, 2)
+                    var gravForce = (p1.mass * p2.mass) / Math.pow(distance, 2)
                     var gravVector = direction.toUnitVector().multiply(gravForce);
     
                     // heavy things are not as affected
