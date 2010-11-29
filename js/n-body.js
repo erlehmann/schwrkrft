@@ -63,6 +63,7 @@ var Camera = function(universe, canvas, milliseconds) {
             var radius = Math.sqrt(particle.mass / Math.PI);
             var position = particle.position.add(this.offset).add($V([canvas.width/2, canvas.height/2]));
 
+            // particle
             c.beginPath();
             c.arc(position.e(1), position.e(2), radius, 0, Math.PI*2, false);
             c.fill();
