@@ -23,7 +23,7 @@ var Universe = function(canvas, milliseconds, offset) {
                     var distance = p1.position.distanceFrom(p2.position);
 
                     // Newton's law of universal gravitation
-                    var gravForce = 9.81 * (p1.mass * p2.mass) / Math.pow(distance, 2)
+                    var gravForce = (p1.mass * p2.mass) / Math.pow(distance, 2)
                     var gravVector = direction.toUnitVector().multiply(gravForce);
     
                     // heavy things are not as affected
@@ -60,7 +60,7 @@ var Camera = function(universe, canvas, milliseconds) {
 
             // mass is threated as an equivalent to area
             // maybe this should be changed to 3D volume?
-            var radius = Math.sqrt(particle.mass / Math.PI);
+            var radius = Math.pow((particle.mass / Math.PI), 1/3);
             var position = particle.position.add(this.offset).add($V([canvas.width/2, canvas.height/2]));
 
             // particle
@@ -68,6 +68,10 @@ var Camera = function(universe, canvas, milliseconds) {
             c.arc(position.e(1), position.e(2), radius, 0, Math.PI*2, false);
             c.fill();
         }
+    }
+
+    this.follow = function(particle) {
+        setInterval( function(that) { that.offset = particle.position.multiply(-1); }, milliseconds, this);
     }
 
     this.context = canvas.getContext('2d');
