@@ -49,4 +49,6 @@
     universe.addPointMass($V([20, 240]), $V([7, 2]), 10); // moon of outer planet
     universe.addPointMass($V([0, 0]), $V([0, 0]), 10000); // sun    
     universe.addPointMass($V([-320, -320]), $V([4, 8]), 60); // comet
+
+    camera.follow(universe.particles[3]);
 </script>
