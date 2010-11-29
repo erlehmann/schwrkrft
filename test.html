@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<title>N-body simulation</title>
+<script src="js/sylvester.js"></script>
+<style>
+    * { margin: 0 }
+    html, body { height: 100%; width: 100% }
+    canvas { background: #00000A; display: block; margin: auto; position: relative; top: 12.5%; }
+</style>
+<canvas id=universe>here be fallback content</canvas>
+<script src="js/n-body.js"></script>
+<script>
+    var canvas = document.getElementById('universe');
+    canvas.width = window.innerWidth/1.25;
+    canvas.height = window.innerHeight/1.25;
+
+    var universe = new Universe(canvas, 80);
+    var camera = new Camera(universe, canvas, 40);
+
+    var stepsize = 4;
+    document.onkeypress = function(e) {
+        switch(e.keyCode) {
+            case 37: // left
+                camera.offset = camera.offset.add($V([-stepsize, 0]));
+                break;
+            case 38: // up
+                camera.offset = camera.offset.add($V([0, -stepsize]));
+                break;
+            case 39: // right
+                camera.offset = camera.offset.add($V([stepsize, 0]));
+                break;
+            case 40: // down
+                camera.offset = camera.offset.add($V([0, stepsize]));
+                break;
+        }
+    }
+
+    canvas.addEventListener(
+        'click', 
+        function(e) {
+            camera.offset = $V([
+                e.clientX-canvas.offsetLeft-canvas.width/2,
+                e.clientY-canvas.offsetTop-canvas.height/2
+            ]);
+        },
+        false
+    );
+
+    universe.addPointMass($V([0, 80]), $V([10, 0]), 20); // inner planet
+    universe.addPointMass($V([0, 240]), $V([7, 0]), 100); // outer planet
+    universe.addPointMass($V([-5, 220]), $V([-0.5, 0]), 4); // moon of outer planet
+    universe.addPointMass($V([0, 0]), $V([0, 0]), 1000); // sun    
+    universe.addPointMass($V([-320, -320]), $V([6, 3]), 6); // comet
+</script>
