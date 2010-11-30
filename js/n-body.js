@@ -86,9 +86,26 @@ var Camera = function(universe, canvas, milliseconds) {
                 var radius = Math.pow((particle.mass / Math.PI), 1/3);
                 c.arc(position.e(1), position.e(2), radius, 0, Math.PI*2, false);
             } else if (particle.shape == 'line') {
-                var pointA = position.add(particle.velocity);
+                var point = position.add(particle.velocity);
                 c.moveTo(position.e(1), position.e(2));
-                c.lineTo(pointA.e(1), pointA.e(2));
+                c.lineTo(point.e(1), point.e(2));
+                c.stroke();
+            } else if (particle.shape == 'spaceship') {
+                var x = position.e(1);
+                var y = position.e(2);
+                var p = 1.2 * Math.pow(particle.mass, 1/3);
+                var q = 0.7 * Math.pow(particle.mass, 1/3);
+                var r = 0.5 * Math.pow(particle.mass, 1/3);
+                var angle = particle.velocity.angleFrom($V([1, 0])) + 4*Math.PI/3;
+                var u = $V([x, y-p]).rotate(angle, position);
+                var v = $V([x+q, y-r]).rotate(angle, position);
+                var w = $V([x-q, y+r]).rotate(angle, position);
+                c.moveTo(u.e(1), u.e(2));
+                c.lineTo(v.e(1), v.e(2));
+                c.moveTo(v.e(1), v.e(2));
+                c.lineTo(w.e(1), w.e(2));
+                c.moveTo(w.e(1), w.e(2));
+                c.lineTo(u.e(1), u.e(2));
                 c.stroke();
             } else {
                 c.font = Math.pow(particle.mass, 1/3) + 'px sans-serif';
