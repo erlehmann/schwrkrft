@@ -86,32 +86,28 @@ var Camera = function(universe, canvas, milliseconds) {
                 var radius = Math.pow((particle.mass / Math.PI), 1/3);
                 c.arc(position.e(1), position.e(2), radius, 0, Math.PI*2, false);
             } else if (particle.shape == 'line') {
-                var point = position.add(particle.velocity);
+                var point = position.add(particle.velocity.toUnitVector().multiply(Math.pow(particle.mass*10, 1/3)));
                 c.moveTo(position.e(1), position.e(2));
                 c.lineTo(point.e(1), point.e(2));
-                c.stroke();
             } else if (particle.shape == 'spaceship') {
                 var x = position.e(1);
                 var y = position.e(2);
-                var p = 1.2 * Math.pow(particle.mass, 1/3);
-                var q = 0.7 * Math.pow(particle.mass, 1/3);
-                var r = 0.5 * Math.pow(particle.mass, 1/3);
-                var angle = particle.velocity.angleFrom($V([1, 0])) + 4*Math.PI/3;
-                var u = $V([x, y-p]).rotate(angle, position);
-                var v = $V([x+q, y-r]).rotate(angle, position);
-                var w = $V([x-q, y+r]).rotate(angle, position);
-                c.moveTo(u.e(1), u.e(2));
-                c.lineTo(v.e(1), v.e(2));
-                c.moveTo(v.e(1), v.e(2));
-                c.lineTo(w.e(1), w.e(2));
-                c.moveTo(w.e(1), w.e(2));
-                c.lineTo(u.e(1), u.e(2));
-                c.stroke();
+                var l = particle.velocity.toUnitVector().multiply(Math.pow(particle.mass*10, 1/3));
+                var p = position.add(l).rotate(Math.PI+Math.PI/12, position)
+                var q = position.add(l).rotate(Math.PI-Math.PI/12, position)
+                c.moveTo(position.e(1), position.e(2));
+                c.lineTo(p.e(1), p.e(2));
+                c.moveTo(p.e(1), p.e(2));
+                c.lineTo(q.e(1), q.e(2));
+                c.moveTo(q.e(1), q.e(2));
+                c.lineTo(position.e(1), position.e(2));
             } else {
                 c.font = Math.pow(particle.mass, 1/3) + 'px sans-serif';
                 c.fillText  ('?', position.e(1), position.e(2));
             }
             c.fill();
+            c.stroke();
+            c.closePath();
         }
     }
 
