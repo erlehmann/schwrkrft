@@ -17,8 +17,8 @@
 */
 
 var Universe = function(canvas, milliseconds, offset) {
-    this.addPointMass = function(position, velocity, mass) {
-        this.particles.push(new PointMass(this, position, velocity, mass));
+    this.addPointMass = function(position, velocity, mass, shape) {
+        this.particles.push(new PointMass(this, position, velocity, mass, shape));
     }
 
     this.particles = [];
@@ -41,7 +41,7 @@ var Universe = function(canvas, milliseconds, offset) {
                     var distance = p1.position.distanceFrom(p2.position);
 
                     // Newton's law of universal gravitation
-                    var gravForce = (p1.mass * p2.mass) / Math.pow(distance, 2)
+                    var gravForce = (p1.mass * p2.mass) / Math.pow(distance, 2);
                     var gravVector = direction.toUnitVector().multiply(gravForce);
     
                     // heavy things are not as affected
@@ -76,14 +76,24 @@ var Camera = function(universe, canvas, milliseconds) {
         while (i--) {
             var particle = universe.particles[i];
 
-            // mass is threated as an equivalent to area
-            // maybe this should be changed to 3D volume?
-            var radius = Math.pow((particle.mass / Math.PI), 1/3);
             var position = particle.position.add(this.offset).add($V([canvas.width/2, canvas.height/2]));
 
             // particle
             c.beginPath();
-            c.arc(position.e(1), position.e(2), radius, 0, Math.PI*2, false);
+            if (particle.shape == 'circle') {
+                // mass is threated as an equivalent to area
+                // maybe this should be changed to 3D volume?
+                var radius = Math.pow((particle.mass / Math.PI), 1/3);
+                c.arc(position.e(1), position.e(2), radius, 0, Math.PI*2, false);
+            } else if (particle.shape == 'line') {
+                var pointA = position.add(particle.velocity);
+                c.moveTo(position.e(1), position.e(2));
+                c.lineTo(pointA.e(1), pointA.e(2));
+                c.stroke();
+            } else {
+                c.font = Math.pow(particle.mass, 1/3) + 'px sans-serif';
+                c.fillText  ('?', position.e(1), position.e(2));
+            }
             c.fill();
         }
     }
@@ -100,10 +110,11 @@ var Camera = function(universe, canvas, milliseconds) {
     setInterval( function(that) { that.draw(); }, milliseconds, this);
 }
 
-var PointMass = function(universe, position, velocity, mass) {
+var PointMass = function(universe, position, velocity, mass, shape) {
     // position is assumed to be a Sylvester vector
     this.position = position;
     // velocity is assumed to be a Sylvester vector
     this.velocity = velocity;
     this.mass = mass;
+    this.shape = shape;
 }

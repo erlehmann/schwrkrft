@@ -62,11 +62,12 @@
         false
     );
 
-    universe.addPointMass($V([0, 100]), $V([10, 0]), 200); // inner planet
-    universe.addPointMass($V([0, 240]), $V([7, 0]), 100); // outer planet
-    universe.addPointMass($V([20, 240]), $V([7, 2]), 10); // moon of outer planet
-    universe.addPointMass($V([0, 0]), $V([0, 0]), 10000); // sun    
-    universe.addPointMass($V([-320, -320]), $V([4, 8]), 60); // comet
+    universe.addPointMass($V([0, 100]), $V([10, 0]), 200, 'circle'); // inner planet
+    universe.addPointMass($V([0, 240]), $V([7, 0]), 100, 'circle'); // outer planet
+    universe.addPointMass($V([20, 240]), $V([7, 2]), 10, 'circle'); // moon of outer planet
+    universe.addPointMass($V([0, 0]), $V([0, 0]), 10000, 'circle'); // sun
+    universe.addPointMass($V([-320, -320]), $V([4, 8]), 60, 'line'); // lance
+    universe.addPointMass($V([100, 100]), $V([4, -8]), 60, ''); // invalid
 
     camera.follow(universe.particles[3]);
 </script>
