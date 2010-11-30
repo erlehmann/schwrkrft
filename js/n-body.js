@@ -63,7 +63,7 @@ var Camera = function(universe, canvas, milliseconds) {
 
         // fading
         c.globalCompositeOperation = 'source-in';
-        c.fillStyle = 'rgba(128, 128, 128, 0.75)';
+        c.fillStyle = 'rgba(128, 128, 128, 0.5)';
         c.fillRect(0, 0, canvas.width, canvas.height);
 
         // dot drawing style
