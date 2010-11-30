@@ -57,7 +57,7 @@
         function(e) {
             var x = e.clientX-canvas.offsetLeft-canvas.width/2-camera.offset.e(1);
             var y = e.clientY-canvas.offsetTop-canvas.height/2-camera.offset.e(2);
-            universe.addPointMass($V([x, y]), $V([Math.random()*10-5, Math.random()*10-5]), Math.random()*1000, 'spaceship');
+            universe.addPointMass($V([x, y]), $V([Math.random()*10 - 5, Math.random()*10-5]), Math.random()*90 + 10, 'spaceship');
         },
         false
     );
@@ -66,8 +66,8 @@
     universe.addPointMass($V([0, 240]), $V([7, 0]), 100, 'circle'); // outer planet
     universe.addPointMass($V([20, 240]), $V([7, 2]), 10, 'circle'); // moon of outer planet
     universe.addPointMass($V([0, 0]), $V([0, 0]), 10000, 'circle'); // sun
-    universe.addPointMass($V([-320, -320]), $V([4, 8]), 60, 'line'); // lance
-    universe.addPointMass($V([100, 100]), $V([4, -8]), 160, 'spaceship'); // triangle
+    universe.addPointMass($V([-320, -320]), $V([4, 8]), 24, 'line'); // lance
+    universe.addPointMass($V([100, 100]), $V([4, -8]), 60, 'spaceship'); // triangle
 
     camera.follow(universe.particles[3]);
 </script>
