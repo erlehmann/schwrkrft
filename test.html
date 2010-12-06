@@ -4,11 +4,13 @@
 <style>
     * { margin: 0 }
     html, body { height: 100%; width: 100%; }
-    canvas { background: #00000A; display: block; margin: auto; position: relative; top: 12.5%; }
     body > a, a > img { border: none; display: block; position: absolute; right: 0; top: 0; z-index: 9001; }
     footer { background: white; bottom: 0; color: black; padding: 1em; position: absolute; }
+    #universe { background: #00000A; left: 10%; position: absolute; top: 10%; }
+    #selected { background: #73d216; bottom: 10%; left: 10%; opacity: 0.75; position: absolute; }
 </style>
 <canvas id=universe>here be fallback content</canvas>
+<canvas id=selected>here be fallback content</canvas>
 <a href=https://github.com/erlehmann/schwrkrft>
     <img src=forkme.png alt="Fork me on GitHub">
 </a>
@@ -28,18 +30,25 @@
 <script src="js/n-body.js"></script>
 <script>
     var canvas = document.getElementById('universe');
-    canvas.width = window.innerWidth/1.25;
-    canvas.height = window.innerHeight/1.25;
+    canvas.width = window.innerWidth*.8;
+    canvas.height = window.innerHeight*.8;
+
+    var canvas2 = document.getElementById('selected');
+    canvas2.width = window.innerWidth*.2;
+    canvas2.height = window.innerHeight*.2;
 
     var universe = new Universe(canvas, 60);
     var camera = new Camera(universe, canvas, 60);
+    var camera2 = new Camera(universe, canvas2, 60)
 
     canvas.addEventListener(
         'click', 
         function(e) {
             var x = e.clientX-canvas.offsetLeft-canvas.width/2;
             var y = e.clientY-canvas.offsetTop-canvas.height/2;
-            camera.select(camera.objectAtCanvasCoords($V([x, y]), 40));
+            object = camera.objectAtCanvasCoords($V([x, y]), 40)
+            camera.select(object);
+            camera2.follow(object);
         },
         false
     );
@@ -52,5 +61,6 @@
     universe.addPointMass($V([100, 100]), $V([4, -8]), 60, 'spaceship'); // triangle
 
     camera.follow(universe.particles[3]);
-    camera.select(universe.particles[0]);
+    camera.select(universe.particles[1]);
+    camera2.follow(universe.particles[1]);
 </script>
