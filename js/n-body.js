@@ -124,9 +124,27 @@ var Camera = function(universe, canvas, milliseconds) {
         setInterval( function(that) { that.offset = particle.position.multiply(-1); }, milliseconds, this);
     }
 
+    this.canvasToUniverseCoords = function(cCoords) {
+        // canvascoords is a sylvester vector
+        return cCoords.subtract(this.offset);
+    }
+
+    this.objectAtCanvasCoords = function(cCoords, padding) {
+        var uCoords = this.canvasToUniverseCoords(cCoords);
+        var i = universe.particles.length;
+        while (i--) {
+            var particle = universe.particles[i];
+            var radius = Math.pow((particle.mass / Math.PI), 1/3);
+            var distance = particle.position.distanceFrom(uCoords);
+            if (distance < radius + padding) {
+                return particle;
+            }
+        }
+        return typeof undefined;
+    }
+
     this.select = function(particle) {
         this.selected = particle;
-        var i = universe.particles.length;
     }
 
     this.unselect = function(particle) {

@@ -55,9 +55,9 @@
     canvas.addEventListener(
         'click', 
         function(e) {
-            var x = e.clientX-canvas.offsetLeft-canvas.width/2-camera.offset.e(1);
-            var y = e.clientY-canvas.offsetTop-canvas.height/2-camera.offset.e(2);
-            universe.addPointMass($V([x, y]), $V([Math.random()*10 - 5, Math.random()*10-5]), Math.random()*90 + 10, 'invalid');
+            var x = e.clientX-canvas.offsetLeft-canvas.width/2;
+            var y = e.clientY-canvas.offsetTop-canvas.height/2;
+            camera.select(camera.objectAtCanvasCoords($V([x, y]), 40));
         },
         false
     );
