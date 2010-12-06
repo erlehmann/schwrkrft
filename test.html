@@ -34,24 +34,6 @@
     var universe = new Universe(canvas, 60);
     var camera = new Camera(universe, canvas, 60);
 
-    var stepsize = 4;
-    document.onkeypress = function(e) {
-        switch(e.keyCode) {
-            case 37: // left
-                camera.offset = camera.offset.add($V([-stepsize, 0]));
-                break;
-            case 38: // up
-                camera.offset = camera.offset.add($V([0, -stepsize]));
-                break;
-            case 39: // right
-                camera.offset = camera.offset.add($V([stepsize, 0]));
-                break;
-            case 40: // down
-                camera.offset = camera.offset.add($V([0, stepsize]));
-                break;
-        }
-    }
-
     canvas.addEventListener(
         'click', 
         function(e) {
