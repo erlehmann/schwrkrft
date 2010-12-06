@@ -103,8 +103,9 @@ var Camera = function(universe, canvas, milliseconds) {
                 c.lineTo(position.e(1), position.e(2));
             } else {
                 c.font = Math.pow(particle.mass*16, 1/3) + 'px sans-serif';
-                c.fillText  ('?', position.e(1), position.e(2));
+                c.fillText  ('?', x, y);
             }
+
             c.fill();
             c.stroke();
             c.closePath();
