@@ -121,7 +121,10 @@ var Camera = function(universe, canvas, milliseconds) {
     }
 
     this.follow = function(particle) {
-        setInterval( function(that) { that.offset = particle.position.multiply(-1); }, milliseconds, this);
+        if (particle != typeof undefined) {
+            clearInterval(this.followId);
+            this.followId = setInterval( function(that) { that.offset = particle.position.multiply(-1); }, milliseconds, this);
+        }
     }
 
     this.canvasToUniverseCoords = function(cCoords) {
