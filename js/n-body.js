@@ -106,6 +106,17 @@ var Camera = function(universe, canvas, milliseconds) {
                 c.fillText  ('?', x, y);
             }
 
+            // selection marker
+            if (particle == this.selected) {
+                var size = Math.pow((particle.mass / Math.PI), 1/3) + 4;
+                var point = position.add(particle.velocity.toUnitVector().multiply(size));
+                var a = point.e(1);
+                var b = point.e(2);
+                c.strokeRect (a-size, b-size, 2*size, 2*size);
+                c.font = '10px sans-serif';
+                c.fillText  ('particle ' + i, x-size, y-size);
+            }
+
             c.fill();
             c.stroke();
             c.closePath();
@@ -114,6 +125,15 @@ var Camera = function(universe, canvas, milliseconds) {
 
     this.follow = function(particle) {
         setInterval( function(that) { that.offset = particle.position.multiply(-1); }, milliseconds, this);
+    }
+
+    this.select = function(particle) {
+        this.selected = particle;
+        var i = universe.particles.length;
+    }
+
+    this.unselect = function(particle) {
+        this.selected = typeof undefined;
     }
 
     this.context = canvas.getContext('2d');
