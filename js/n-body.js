@@ -111,7 +111,7 @@ var Camera = function(universe, canvas, milliseconds) {
                 var size = Math.pow((particle.mass / Math.PI), 1/3) + 4;
                 c.strokeRect (x-size, y-size, 2*size, 2*size);
                 c.font = '10px sans-serif';
-                c.fillText  ('particle ' + i, x-size, y-size);
+                c.fillText  ('particle ' + i, x-size, y-size-4);
             }
 
             c.fill();
