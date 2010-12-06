@@ -109,10 +109,7 @@ var Camera = function(universe, canvas, milliseconds) {
             // selection marker
             if (particle == this.selected) {
                 var size = Math.pow((particle.mass / Math.PI), 1/3) + 4;
-                var point = position.add(particle.velocity.toUnitVector().multiply(size));
-                var a = point.e(1);
-                var b = point.e(2);
-                c.strokeRect (a-size, b-size, 2*size, 2*size);
+                c.strokeRect (x-size, y-size, 2*size, 2*size);
                 c.font = '10px sans-serif';
                 c.fillText  ('particle ' + i, x-size, y-size);
             }
