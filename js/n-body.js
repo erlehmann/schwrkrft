@@ -77,6 +77,8 @@ var Camera = function(universe, canvas, milliseconds) {
             var particle = universe.particles[i];
 
             var position = particle.position.add(this.offset).add($V([canvas.width/2, canvas.height/2]));
+            var x = position.e(1);
+            var y = position.e(2);
 
             // particle
             c.beginPath();
@@ -84,14 +86,12 @@ var Camera = function(universe, canvas, milliseconds) {
                 // mass is threated as an equivalent to area
                 // maybe this should be changed to 3D volume?
                 var radius = Math.pow((particle.mass / Math.PI), 1/3);
-                c.arc(position.e(1), position.e(2), radius, 0, Math.PI*2, false);
+                c.arc(x, y, radius, 0, Math.PI*2, false);
             } else if (particle.shape == 'line') {
                 var point = position.add(particle.velocity.toUnitVector().multiply(particle.mass));
-                c.moveTo(position.e(1), position.e(2));
+                c.moveTo(x, y);
                 c.lineTo(point.e(1), point.e(2));
             } else if (particle.shape == 'spaceship') {
-                var x = position.e(1);
-                var y = position.e(2);
                 var l = particle.velocity.toUnitVector().multiply(Math.pow(particle.mass*16, 1/3));
                 var p = position.add(l).rotate(Math.PI+Math.PI/12, position)
                 var q = position.add(l).rotate(Math.PI-Math.PI/12, position)
