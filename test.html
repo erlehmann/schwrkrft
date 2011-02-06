@@ -14,6 +14,9 @@
 <a href=https://github.com/erlehmann/schwrkrft>
     <img src=forkme.png alt="Fork me on GitHub">
 </a>
+<button id=addplanet>Add planet in orbit</button>
+<label for=mass>mass<label><input type=text value=20 id=mass>
+<label for=distance><label><input type=text value=200 id=distance>
 <footer>
     <p>
         <small>
@@ -63,4 +66,17 @@
     camera.follow(universe.particles[3]);
     camera.select(universe.particles[1]);
     camera2.follow(universe.particles[1]);
+
+    var button = document.getElementById('addplanet');
+
+    button.addEventListener(
+        'click',
+        function() {
+            mass = parseFloat(document.getElementById('mass').value);
+            distance = parseFloat(document.getElementById('distance').value);
+
+            universe.addPointMassInOrbit(camera.selected, distance, mass, 'circle');
+        },
+        false
+    );
 </script>
