@@ -15,8 +15,6 @@
     <img src=forkme.png alt="Fork me on GitHub">
 </a>
 <button id=addplanet>Add planet in orbit</button>
-<label for=mass>mass<label><input type=text value=20 id=mass>
-<label for=distance><label><input type=text value=200 id=distance>
 <footer>
     <p>
         <small>
@@ -72,10 +70,16 @@
     button.addEventListener(
         'click',
         function() {
-            mass = parseFloat(document.getElementById('mass').value);
-            distance = parseFloat(document.getElementById('distance').value);
+            var particle = camera.selected;
 
-            universe.addPointMassInOrbit(camera.selected, distance, mass, 'circle');
+            var radius = Math.pow((particle.mass / Math.PI), 1/3);
+            var distance = radius * Math.random() * 5 + radius;
+
+            var mass = Math.random() * particle.mass/50 + 1;
+            var position = particle.position.add($V([distance, 0]));
+            var velocity = universe.getFirstCosmicVelocity(particle, position);
+
+            universe.addPointMass(position, velocity, mass, 'circle');
         },
         false
     );

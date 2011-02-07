@@ -21,18 +21,16 @@ var Universe = function(canvas, milliseconds, offset) {
         this.particles.push(new PointMass(this, position, velocity, mass, shape));
     }
 
-    this.addPointMassInOrbit = function(particle, distance, mass, shape) {
-        var position = particle.position.add($V([distance, 0]));
+    this.getFirstCosmicVelocity = function(particle, position) {
+        // orbit is counter-clockwise
+        var direction = particle.position.subtract(position).rotate(Math.PI/2, particle.position);
+        var distance = particle.position.distanceFrom(position);
 
-        // first cosmic velocity
-        var velocity = $V([0, 1]).multiply(
-            Math.pow(particle.mass / distance, 0.5)
-        );
-        velocity = velocity.add(particle.velocity)
+        var velocityForce = Math.pow(particle.mass / distance, 0.5);
+        var velocityVector = direction.toUnitVector().multiply(velocityForce).add(particle.velocity)
 
-        this.addPointMass(position, velocity, mass, shape);
+        return velocityVector;
     }
-
 
     this.particles = [];
 
