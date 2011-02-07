@@ -94,7 +94,7 @@ var Camera = function(universe, canvas, milliseconds) {
             // particle
             c.beginPath();
             if (particle.shape == 'circle') {
-                // mass is threated as an equivalent to area
+                // mass is treated as an equivalent to area
                 // maybe this should be changed to 3D volume?
                 var radius = Math.pow((particle.mass / Math.PI), 1/3);
                 c.arc(x, y, radius, 0, Math.PI*2, false);
@@ -116,6 +116,7 @@ var Camera = function(universe, canvas, milliseconds) {
                 c.font = Math.pow(particle.mass*16, 1/3) + 'px sans-serif';
                 c.fillText  ('?', x, y);
             }
+            c.closePath();
 
             // selection marker
             if (particle == this.selected) {
@@ -127,7 +128,6 @@ var Camera = function(universe, canvas, milliseconds) {
 
             c.fill();
             c.stroke();
-            c.closePath();
         }
     }
 
